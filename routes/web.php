@@ -10,6 +10,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// Simulator route
+Route::get('/simulator', function () {
+    return view('simulator');
+})->name('simulator');
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
