@@ -3,45 +3,58 @@
 @section('title', 'Login - Complaint Management System')
 
 @section('content')
-<div class="card" style="max-width: 400px; margin: 2rem auto;">
-    <div class="card-header">
-        <h1 class="card-title">Login</h1>
-        <p style="color: #6b7280; margin-top: 0.5rem;">Access your complaint management account</p>
-    </div>
+<div class="min-h-[60vh] flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-light text-gray-900 mb-2">Welcome back</h1>
+                <p class="text-gray-600">Access your complaint management account</p>
+            </div>
 
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-        
-        <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" id="email" name="email" class="form-control" 
-                   value="{{ old('email') }}" required>
+            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                @csrf
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <input type="email" id="email" name="email" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           value="{{ old('email') }}" required>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           required>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="checkbox" name="remember" id="remember" 
+                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">
+                        Remember me
+                    </label>
+                </div>
+
+                <button type="submit" 
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                    Sign in
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                <p class="text-gray-600">
+                    Don't have an account? 
+                    <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200">
+                        Create account
+                    </a>
+                </p>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                <input type="checkbox" name="remember" style="margin: 0;">
-                Remember me
-            </label>
-        </div>
-
-        <div class="form-group" style="margin-bottom: 0;">
-            <button type="submit" class="btn btn-primary" style="width: 100%;">
-                Login
-            </button>
-        </div>
-    </form>
-
-    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
-        <p style="color: #6b7280;">
-            Don't have an account? 
-            <a href="{{ route('register') }}" style="color: #2563eb; text-decoration: none;">Register here</a>
-        </p>
     </div>
 </div>
 @endsection

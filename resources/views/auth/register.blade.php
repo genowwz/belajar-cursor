@@ -3,50 +3,69 @@
 @section('title', 'Register - Complaint Management System')
 
 @section('content')
-<div class="card" style="max-width: 400px; margin: 2rem auto;">
-    <div class="card-header">
-        <h1 class="card-title">Register</h1>
-        <p style="color: #6b7280; margin-top: 0.5rem;">Create your complaint management account</p>
-    </div>
+<div class="min-h-[60vh] flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-light text-gray-900 mb-2">Create account</h1>
+                <p class="text-gray-600">Join our complaint management system</p>
+            </div>
 
-    <form action="{{ route('register') }}" method="POST">
-        @csrf
-        
-        <div class="form-group">
-            <label for="name" class="form-label">Full Name</label>
-            <input type="text" id="name" name="name" class="form-control" 
-                   value="{{ old('name') }}" required>
+            <form action="{{ route('register') }}" method="POST" class="space-y-6">
+                @csrf
+                
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name
+                    </label>
+                    <input type="text" id="name" name="name" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           value="{{ old('name') }}" required>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <input type="email" id="email" name="email" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           value="{{ old('email') }}" required>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           required>
+                    <p class="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+                </div>
+
+                <div>
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
+                        Confirm Password
+                    </label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                           required>
+                </div>
+
+                <button type="submit" 
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                <p class="text-gray-600">
+                    Already have an account? 
+                    <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200">
+                        Sign in
+                    </a>
+                </p>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" id="email" name="email" class="form-control" 
-                   value="{{ old('email') }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required>
-            <small style="color: #6b7280; font-size: 0.875rem;">Minimum 6 characters</small>
-        </div>
-
-        <div class="form-group">
-            <label for="password_confirmation" class="form-label">Confirm Password</label>
-            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
-        </div>
-
-        <div class="form-group" style="margin-bottom: 0;">
-            <button type="submit" class="btn btn-primary" style="width: 100%;">
-                Register
-            </button>
-        </div>
-    </form>
-
-    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
-        <p style="color: #6b7280;">
-            Already have an account? 
-            <a href="{{ route('login') }}" style="color: #2563eb; text-decoration: none;">Login here</a>
-        </p>
     </div>
 </div>
 @endsection
