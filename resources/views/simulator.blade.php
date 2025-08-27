@@ -12,29 +12,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
   <style>
     :root{
-      --bg:#071026; --card:#0b1624; --muted:#9fb2c9; --accent:#ffd166; --accent2:#06b6d4; --danger:#ef4444; --success:#22c55e;
+      --bg:#071026; --card:#0b1624; --muted:#b9c9da; --accent:#ffd166; --accent2:#06b6d4; --danger:#ef4444; --success:#22c55e;
     }
     html,body{height:100%; margin:0; font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; background:linear-gradient(180deg,#03060a 0%,var(--bg) 100%); color:#e6eef6}
     .glass{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); backdrop-filter: blur(6px)}
-    .card{background:var(--card); border:1px solid rgba(255,255,255,0.03); border-radius:12px}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,0.04); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.35)}
     .btn{transition:transform .14s ease, box-shadow .14s ease}
     .btn:hover{transform:translateY(-3px)}
     .small{font-size:13px; color:var(--muted)}
     .kpi{border-radius:8px; padding:10px; border:1px solid rgba(255,255,255,0.03)}
     .section-pad{padding-top:40px;padding-bottom:40px}
     .muted{color:var(--muted)}
-    .accent-txt{background:linear-gradient(90deg,var(--accent2),var(--accent)); -webkit-background-clip:text; color:transparent}
+    .accent-txt{background:linear-gradient(90deg,var(--accent2),var(--accent)); -webkit-background-clip:text; color:transparent; text-shadow:0 1px 6px rgba(6,182,212,0.25)}
     .shadow-soft{box-shadow:0 8px 20px rgba(2,6,23,0.6)}
     table td, table th{vertical-align:middle}
     @media (max-width:768px){ .hide-sm{display:none} }
     .label { font-size:12px; color:var(--muted) }
     .input { padding:8px; border-radius:6px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.03); color:inherit }
     /* 3D background canvas */
-    #bg3d{position:fixed; inset:0; z-index:-1; background:radial-gradient(1200px 800px at 20% 10%, rgba(6,182,212,0.08), transparent 60%), radial-gradient(800px 600px at 80% 30%, rgba(255,209,102,0.06), transparent 60%)}
+    #bg3d{position:fixed; inset:0; z-index:-1; background:radial-gradient(1200px 800px at 20% 10%, rgba(6,182,212,0.04), transparent 60%), radial-gradient(800px 600px at 80% 30%, rgba(255,209,102,0.03), transparent 60%)}
+    #bgDim{position:fixed; inset:0; z-index:0; background:rgba(0,0,0,0.28); pointer-events:none}
   </style>
 </head>
 <body>
   <canvas id="bg3d"></canvas>
+  <div id="bgDim"></div>
   <header class="glass sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -263,7 +265,7 @@
     });
 
     // 3D Background (Three.js starfield)
-    let threeEnabled = true;
+    let threeEnabled = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) && window.innerWidth >= 768;
     const bgCanvas = $('bg3d');
     const renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true, alpha: true });
     const scene = new THREE.Scene();
@@ -273,7 +275,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const starGeo = new THREE.BufferGeometry();
-    const starCount = 1200;
+    const starCount = 800;
     const positions = new Float32Array(starCount * 3);
     for(let i=0;i<starCount;i++){
       const r = 120 * Math.cbrt(Math.random());
@@ -284,7 +286,7 @@
       positions[i*3+2] = r * Math.cos(phi);
     }
     starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const starMat = new THREE.PointsMaterial({ color: 0x86eafc, size: 0.9, sizeAttenuation: true, transparent: true, opacity: 0.8 });
+    const starMat = new THREE.PointsMaterial({ color: 0x86eafc, size: 0.6, sizeAttenuation: true, transparent: true, opacity: 0.6 });
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars);
 
@@ -304,7 +306,7 @@
       renderer.render(scene, camera);
       requestAnimationFrame(animate3D);
     }
-    animate3D();
+    if(threeEnabled){ animate3D(); } else { bgCanvas.style.display = 'none'; if(document.getElementById('toggle3D')) document.getElementById('toggle3D').textContent = '3D: Off'; }
 
     function onResize(){
       camera.aspect = window.innerWidth / window.innerHeight;
