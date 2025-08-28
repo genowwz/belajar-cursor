@@ -1,3 +1,18 @@
+Adobe Stock Keyword Volume Scraper
+
+Setup
+- Create venv (optional) and install dependencies: pip install -r requirements.txt
+- Run: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+Usage
+- Open http://localhost:8000
+- Upload a .xlsx file containing a column of keywords
+- Provide the column name
+- Receive a CSV of keyword -> result count scraped from Adobe Stock search
+
+Notes
+- Counts are parsed from the HTML title/meta and may vary by locale/time
+- Respect rate limits; adjust concurrency if needed
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
